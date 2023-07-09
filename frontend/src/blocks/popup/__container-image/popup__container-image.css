@@ -1,0 +1,11 @@
+.popup__container-image {
+    display: grid;
+    gap: 8px;
+    position: absolute;
+}
+
+@media screen and (max-width: 1023px){
+    .popup__container {
+        gap: 16px;
+    }
+  }

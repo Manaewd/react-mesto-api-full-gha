@@ -1,0 +1,27 @@
+.popup__item {
+    margin: 31px 22px 0;
+    min-height: 27px;
+    max-width: 238px;
+    width: 100%;
+    border: none;
+    display: block;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.popup__item:first-of-type{
+    margin-top: 0;
+}
+
+.popup__item.popup__item_type_error {
+    border-color: red;
+}
+
+@media screen and (min-width: 1023px) {
+    .popup__item {
+        max-width: 358px;
+        margin: 30px 36px 0 36px;
+    }
+  }

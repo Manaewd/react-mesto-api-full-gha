@@ -1,0 +1,6 @@
+.header__nav_mob-active {
+    flex-direction: column;
+    display: flex;
+    padding: 40px 0;
+    align-items: center;
+}

@@ -1,0 +1,15 @@
+.popup__registration-title {
+    margin: 40px 18px 50px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 900;
+    color: black;
+}
+
+@media screen and (min-width: 1280px) {
+    .popup__registration-title {
+        font-size: 24px;
+        line-height: 29px;
+        margin: 32px 36px 60px;
+    }
+}

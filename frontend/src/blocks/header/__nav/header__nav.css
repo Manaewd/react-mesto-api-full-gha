@@ -1,0 +1,12 @@
+.header__nav {
+    display: none;
+  }
+  
+  @media screen and (min-width: 1280px) {
+    .header__nav {
+      display: flex;
+      font-size: 18px;
+      align-items: center;
+      line-height: 22px;
+    }
+  }

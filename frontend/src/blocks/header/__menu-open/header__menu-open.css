@@ -1,0 +1,22 @@
+.header__menu-open {
+    padding: 0;
+    margin: 0 27px 0 0;
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+    background-position: center;
+    background-image: url(../../../images/header-menu.svg);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+}
+
+.header__menu-open:hover {
+    opacity: .6;
+}
+
+@media screen and (min-width: 1280px) {
+    .header__menu-open {
+      display: none;
+    }
+  }

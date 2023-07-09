@@ -1,0 +1,16 @@
+.popup__form-edit {
+    margin: 0;
+    display: block;
+    align-self: center;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    max-width: 430px;
+    justify-content: center;
+}
+
+@media screen and (max-width: 1023px){
+    .popup__form-edit {
+        max-width: 282px;
+    }
+  }

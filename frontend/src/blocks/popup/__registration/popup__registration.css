@@ -1,0 +1,18 @@
+.popup__registration {
+  position: relative;
+  text-align: center;
+  height: 308px;
+  width: 280px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 1280px) {
+  .popup__registration {
+    height: 330px;
+    width: 430px;
+    
+  }
+}

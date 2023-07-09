@@ -1,0 +1,16 @@
+.popup__form-add {
+    margin: 0;
+    display: block;
+    align-self: center;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    max-width: 430px;
+    justify-content: center;
+}
+
+@media screen and (max-width: 1023px){
+    .popup__form-add {
+        max-width: 282px;
+    }
+  }
