@@ -19,6 +19,12 @@ app.use(express.json()); // входящие запросы переводит �
 app.use(cookieParser()); // подключаем парсер cookie (для извлечения данных из куков)
 app.use(requestLogger);
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.use(routes);
 app.use(errorLogger);
 app.use(errors());
