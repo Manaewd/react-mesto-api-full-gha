@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.91.44
+IP 51.250.91.44
 
 Frontend https://manaewd.nomoredomains.work/
 
