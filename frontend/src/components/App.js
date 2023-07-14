@@ -67,7 +67,6 @@ function App() {
     auth
       .login({ email, password })
       .then((data) => {
-        localStorage.setItem("token", data.token);
         setLoggedIn(true);
         setEmailHeader(email);
         navigate("/");
@@ -80,10 +79,8 @@ function App() {
   }
 
   function handleTokenCheck() {
-    const token = localStorage.getItem("token");
-    if (token) {
       auth
-        .checkToken(token)
+        .checkToken()
         .then((user) => {
           setLoggedIn(true);
           setEmailHeader(user.data.email);
@@ -92,7 +89,6 @@ function App() {
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
         });
-    }
   }
 
   useEffect(() => {
@@ -101,7 +97,6 @@ function App() {
 
   function handleLogout() {
     setLoggedIn(false);
-    localStorage.removeItem("token");
     navigate("/sign-in");
   }
 

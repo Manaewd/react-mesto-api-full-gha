@@ -7,9 +7,11 @@ const BadRequestError = require('../errors/bad-request-error');
 const AuthDataError = require('../errors/auth-data-error');
 const AuthError = require('../errors/auth-error');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const getUsers = (req, res, next) => {
-  User.find()
-    .then((users) => res.send({ data: users }))
+  User.find({})
+    .then((users) => res.send(users))
     .catch(next);
 };
 
@@ -17,7 +19,7 @@ const getUserInfo = (req, res, next) => {
   const { _id } = req.user;
   User.findById(_id)
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch(next);
 };
@@ -116,9 +118,13 @@ const login = (req, res, next) => {
       bcrypt.compare(String(password), user.password)
         .then((isValidUser) => {
           if (isValidUser) {
-            const jwt = jsonWebToken.sign({
-              _id: user._id,
-            }, 'JWT_SECRET');
+            const jwt = jsonWebToken.sign(
+              {
+                _id: user._id,
+              },
+              NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+              { expiresIn: '7d' },
+            );
 
             res.cookie('jwt', jwt, {
               maxAge: 360000 * 24 * 7,

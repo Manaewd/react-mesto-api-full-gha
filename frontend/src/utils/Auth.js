@@ -14,6 +14,7 @@ class Auth {
     register({ email, password }) {
       return fetch(`${this._url}/signup`, {
         method: 'POST',
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           email,
@@ -27,6 +28,7 @@ class Auth {
       return fetch(`${this._url}/signin`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({
           email,
           password
@@ -38,6 +40,7 @@ class Auth {
     checkToken(token) {
       return fetch(`${this._url}/users/me`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -49,7 +52,8 @@ class Auth {
 
 
 const auth = new Auth({
-url: 'https://auth.nomoreparties.co'
+  url: 'http://localhost:3000',
+  credentials: 'include'
 });
 
 

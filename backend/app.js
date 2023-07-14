@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const routes = require('./routes');
@@ -8,6 +9,7 @@ const errorHandler = require('./errors/error-handler');
 
 const app = express();
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 const { PORT = 3000, MONGO = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
@@ -15,8 +17,12 @@ mongoose.connect(MONGO, {
   useNewUrlParser: true,
 });
 
-app.use(express.json()); // входящие запросы переводит в JSON
+app.use(express.json());
+app.use(helmet());
 app.use(cookieParser()); // подключаем парсер cookie (для извлечения данных из куков)
+
+app.use(cors);
+
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
