@@ -28,7 +28,8 @@ app.use(cookieParser()); // подключаем парсер cookie (для и�
 
 app.use(cors({
   credentials: true,
-  origin: 'https://manaewd.nomoredomains.work',
+  origin:
+  'https://manaewd.nomoredomains.work',
 }));
 
 app.use(requestLogger);

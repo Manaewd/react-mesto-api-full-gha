@@ -25,7 +25,7 @@ const getUserInfo = (req, res, next) => {
 };
 
 const getUserById = (req, res, next) => {
-  User.findById(req.params.id)
+  User.findById(req.params.userId || req.user._id)
     .orFail(new Error('User not found'))
     .then((user) => {
       res.status(200).send(user);
