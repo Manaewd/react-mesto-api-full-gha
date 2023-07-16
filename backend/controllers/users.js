@@ -64,18 +64,15 @@ const createUser = (req, res, next) => {
 };
 
 const updateUserProfile = (req, res, next) => {
-  const { _id } = req.user;
-  const { name, about } = req.body;
-
-  User.findByIdAndUpdate(_id, { name, about }, {
+  User.findByIdAndUpdate(req.user._id, req.body, {
     new: true,
     runValidators: true,
   })
-    .then((user) => {
-      if (!user) {
+    .then((userInfo) => {
+      if (!userInfo) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       }
-      return res.send(user);
+      return res.send(userInfo);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -94,11 +91,11 @@ const updateUserAvatar = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => {
-      if (!user) {
+    .then((userInfo) => {
+      if (!userInfo) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       }
-      return res.status(200).send({ data: user });
+      return res.status(200).send(userInfo);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -147,7 +144,12 @@ const login = (req, res, next) => {
 };
 
 const getLogout = (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Вы вышли из профиля' });
+  res.clearCookie('jwt').send({ message: 'Вышли из профиля' });
+};
+
+const logout = (req, res) => {
+  res.clearCookie('token')
+    .send({ message: 'Выход' });
 };
 
 module.exports = {

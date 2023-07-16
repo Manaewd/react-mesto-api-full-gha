@@ -1,10 +1,12 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const helmet = require('helmet');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+
+const cookieParser = require('cookie-parser');
+
 const cors = require('cors');
 const routes = require('./routes');
 const errorHandler = require('./errors/error-handler');
@@ -12,7 +14,6 @@ const errorHandler = require('./errors/error-handler');
 const app = express();
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const cors = require('./middlewares/cors');
 
 const { PORT = 3000, MONGO = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
@@ -27,7 +28,7 @@ app.use(cookieParser()); // подключаем парсер cookie (для и�
 
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3001',
+  origin: 'https://manaewd.nomoredomains.work',
 }));
 
 app.use(requestLogger);

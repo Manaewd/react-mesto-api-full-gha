@@ -36,6 +36,16 @@ class Auth {
       })
       .then(res => this._checkResponse(res))
     }
+
+    logout() {
+      return fetch(`${this._url}/logout`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(res => this._checkResponse(res))
+    }
     
     checkToken() {
       return fetch(`${this._url}/users/me`, {
@@ -51,7 +61,7 @@ class Auth {
 
 
 const auth = new Auth({
-url: 'http://localhost:3000',
+url: 'https://api.manaewd.nomoredomains.work',
 credentials: 'include',
 });
 

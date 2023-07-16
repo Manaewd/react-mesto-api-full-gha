@@ -102,15 +102,6 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  // useEffect(() => {
-  //   handleTokenCheck();
-  // }, []);
-
-  // function handleLogout() {
-  //   setLoggedIn(false);
-  //   navigate("/sign-in");
-  // }
-
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(id => id === currentUser._id);
@@ -135,9 +126,9 @@ function App() {
   }
 
 
-  function handleUpdateUser(data) {
+  function handleUpdateUser(userInfo) {
     api
-      .setUserInfo(data)
+      .setUserInfo(userInfo)
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
