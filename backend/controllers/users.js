@@ -147,11 +147,6 @@ const getLogout = (req, res) => {
   res.clearCookie('jwt').send({ message: 'Вышли из профиля' });
 };
 
-const logout = (req, res) => {
-  res.clearCookie('token')
-    .send({ message: 'Выход' });
-};
-
 module.exports = {
   getUsers,
   getUserById,
