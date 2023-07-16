@@ -25,10 +25,10 @@ const getUserInfo = (req, res, next) => {
 };
 
 const getUserById = (req, res, next) => {
-  User.findById(req.params.userId || req.user._id)
+  User.findById(req.params.id)
     .orFail(new Error('User not found'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.message === 'User not found') {
@@ -75,7 +75,7 @@ const updateUserProfile = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       }
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -119,9 +119,7 @@ const login = (req, res, next) => {
         .then((isValidUser) => {
           if (isValidUser) {
             const jwt = jsonWebToken.sign(
-              {
-                _id: user._id,
-              },
+              { _id: user._id },
               NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
               { expiresIn: '7d' },
             );
@@ -131,7 +129,6 @@ const login = (req, res, next) => {
               httpOnly: true,
               sameSite: true,
             });
-
             res.send({ data: user.toJSON() });
           } else {
             next(new AuthError('Ошибка авторизации'));
@@ -149,6 +146,10 @@ const login = (req, res, next) => {
     });
 };
 
+const getLogout = (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Вы вышли из профиля' });
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -157,4 +158,5 @@ module.exports = {
   updateUserAvatar,
   getUserInfo,
   login,
+  getLogout,
 };

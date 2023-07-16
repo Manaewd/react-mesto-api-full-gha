@@ -27,8 +27,8 @@ class Auth {
     login({ email, password }) {
       return fetch(`${this._url}/signin`, {
         method: 'POST',
-        headers: { "Content-Type": "application/json" },
         credentials: 'include',
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
           password
@@ -37,13 +37,12 @@ class Auth {
       .then(res => this._checkResponse(res))
     }
     
-    checkToken(token) {
+    checkToken() {
       return fetch(`${this._url}/users/me`, {
         method: 'GET',
         credentials: 'include',
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
       }).then(res => this._checkResponse(res))
     };
@@ -52,8 +51,8 @@ class Auth {
 
 
 const auth = new Auth({
-  url: 'http://localhost:3000',
-  credentials: 'include'
+url: 'http://localhost:3000',
+credentials: 'include',
 });
 
 

@@ -5,7 +5,7 @@ const ForbiddenError = require('../errors/forbidden-error');
 
 const getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send(cards))
+    .then((cards) => res.status(200).send(cards))
     .catch(next);
 };
 
@@ -48,7 +48,7 @@ const likeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError({ message: 'Передан несуществующий _id карточки' });
       }
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch(next);
 };

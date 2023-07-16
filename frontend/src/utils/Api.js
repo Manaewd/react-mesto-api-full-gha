@@ -1,8 +1,7 @@
 export class Api {
-  constructor({ url, headers, credentials }) {
+  constructor({ url, headers }) {
       this._url = url;
       this._headers = headers;
-      this._credentials = credentials;
   }
 
   _checkResponse(res) {
@@ -17,20 +16,20 @@ export class Api {
   getUserInfo() {
       return fetch(`${this._url}/users/me`, {
           headers: this._headers,
-          credentials: 'include',
+          credentials: 'include'
       })
       .then(res => this._checkResponse(res));
   }
 
   // Метот передачи данных пользователя на сервер
-  setUserInfo({ data }) {
+  setUserInfo({ name, about }) {
       return fetch(`${this._url}/users/me`, {
         method: 'PATCH',
         credentials: 'include',
         headers: this._headers,
         body: JSON.stringify({
-          name: data.name,
-          about: data.about,
+          name: name,
+          about: about,
         }) 
       })
       .then(res => this._checkResponse(res))
@@ -40,7 +39,7 @@ export class Api {
   getInitialCards() {
       return fetch(`${this._url}/cards`, {
           headers: this._headers,
-          credentials: 'include',
+          credentials: 'include'
       })
       .then(res => this._checkResponse(res));
   }
@@ -52,21 +51,21 @@ export class Api {
     credentials: 'include',
     headers: this._headers,
     body: JSON.stringify({
-      avatar
+      avatar: avatar
     })
   })
   .then(res => this._checkResponse(res));
   }
 
   // Метод передачи на сервер новых данных о пользователе 
-  addNewCard( name, link ) {
+  addNewCard({ name, link }) {
       return fetch(`${this._url}/cards`, {
           method: 'POST',
           credentials: 'include',
           headers: this._headers,
           body: JSON.stringify({
-              name,
-              link
+              name: name,
+              link: link
           })
       })
       .then(res => this._checkResponse(res));
@@ -75,7 +74,7 @@ export class Api {
   // Метод удаления карточки с сервера
   deleteCard(id) {
       return fetch(`${this._url}/cards/${id}`, {
-        method: 'DELETE',
+        method: 'DELETE', 
         credentials: 'include',
         headers: this._headers,
       }).then(res => this._checkResponse(res));
@@ -92,6 +91,7 @@ export class Api {
     } else {
         return fetch(`${this._url}/cards/${id}/likes`, {
           method: 'DELETE',
+          credentials: 'include',
           headers: this._headers,
         }).then(res => this._checkResponse(res));
     }
@@ -99,11 +99,11 @@ export class Api {
 }
 
 const api = new Api({
-url: 'http://localhost:3001',
-credentials: 'include',
+url: 'http://localhost:3000',
 headers: {
   'Content-Type': 'application/json'
-}
+},
+credentials: 'include'
 });
 
 

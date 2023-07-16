@@ -37,12 +37,14 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    handleTokenCheck();
     if (loggedIn) {
       Promise.all([api.getUserInfo(), api.getInitialCards()])
         .then((result) => {
           const [userData, cardsData] = result;
           setCurrentUser(userData);
           setCards(cardsData);
+          navigate('/');
         })
         .catch((err) => console.log(err));
     }
@@ -66,10 +68,9 @@ function App() {
   function handleLogin({ email, password }) {
     auth
       .login({ email, password })
-      .then((data) => {
+      .then(() => {
         setLoggedIn(true);
         setEmailHeader(email);
-        navigate("/");
       })
       .catch((err) => {
         setRegSuccess(false);
@@ -83,7 +84,7 @@ function App() {
         .checkToken()
         .then((user) => {
           setLoggedIn(true);
-          setEmailHeader(user.data.email);
+          setEmailHeader(user.email);
           navigate("/");
         })
         .catch((err) => {
@@ -91,13 +92,76 @@ function App() {
         });
   }
 
-  useEffect(() => {
-    handleTokenCheck();
-  }, []);
+  function handleAddPlaceSubmit(name, link) {
+    api
+      .addNewCard(name, link)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // useEffect(() => {
+  //   handleTokenCheck();
+  // }, []);
+
+  // function handleLogout() {
+  //   setLoggedIn(false);
+  //   navigate("/sign-in");
+  // }
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(id => id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+        state.map((c) => c._id === card._id ? newCard : c))
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((newCard) => newCard.filter((item) => item._id !== card._id));
+      })
+      .catch((err) => console.log(err));
+  }
+
+
+  function handleUpdateUser(data) {
+    api
+      .setUserInfo(data)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleUpdateAvatar({ avatar }) {
+    api
+      .setUserAvatar(avatar)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
 
   function handleLogout() {
-    setLoggedIn(false);
-    navigate("/sign-in");
+    auth.logout()
+      .then(() => {
+        setLoggedIn(false);
+        navigate('/sign-in');
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleClickMenuOpen() {
@@ -124,62 +188,6 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setSelectedCard({});
     setIsInfoTooltipOpen(false);
-  }
-
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleCardDelete(card) {
-    api
-      .deleteCard(card._id)
-      .then(() => {
-        setCards((cards) => cards.filter((c) => c._id !== card._id));
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleUpdateUser(data) {
-    console.log(data);
-    api
-      .setUserInfo({ data })
-      .then((newUser) => {
-        setCurrentUser(newUser);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleUpdateAvatar({ avatar }) {
-    console.log(avatar);
-    api
-      .setUserAvatar(avatar)
-      .then((newUser) => {
-        setCurrentUser(newUser);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleAddPlaceSubmit({ name, link }) {
-    api
-      .addNewCard(name, link)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
   }
 
   return (
