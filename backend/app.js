@@ -1,4 +1,3 @@
-// require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -28,8 +27,7 @@ app.use(cookieParser()); // подключаем парсер cookie (для и�
 
 app.use(cors({
   credentials: true,
-  origin:
-  'https://manaewd.nomoredomains.work',
+  origin: 'https://manaewd.nomoredomains.work',
 }));
 
 app.use(requestLogger);

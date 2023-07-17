@@ -61,9 +61,9 @@ class Auth {
 
 
 const auth = new Auth({
-url: 'https://api.manaewd.nomoredomains.work',
-credentials: 'include',
-});
+  url: 'https://api.manaewd.nomoredomains.work',
+  credentials: 'include',
+  });
 
 
 export default auth

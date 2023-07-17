@@ -30,9 +30,9 @@ function App() {
 
   const [RegSuccess, setRegSuccess] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [emailHeader, setEmailHeader] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [emailHeader, setEmailHeader] = useState("");
 
   const navigate = useNavigate();
 
@@ -185,7 +185,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header
-          headerEmail={emailHeader}
+          emailHeader={emailHeader}
           onLogOut={handleLogout}
           menuOpen={handleClickMenuOpen}
           isOpen={isMobileMenuOpen}
